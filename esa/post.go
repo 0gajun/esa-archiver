@@ -18,10 +18,6 @@ type Post struct {
 	RevisionNumber int       `json:"revision_number"`
 	CreatedBy      User      `json:"created_by"`
 	UpdatedBy      User      `json:"updated_by"`
-}
 
-type User struct {
-	Name       string `json:"name"`
-	ScreenName string `json:"screen_name"`
-	Icon       string `json:"icon"`
+	Comments []Comment `json:"comments"`
 }

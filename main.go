@@ -29,5 +29,9 @@ func main() {
 
 	for _, post := range posts {
 		fmt.Printf("%s\n", post.Name)
+
+		for _, comment := range post.Comments {
+			fmt.Printf("\t%s", comment.BodyMd)
+		}
 	}
 }

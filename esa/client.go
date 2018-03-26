@@ -86,7 +86,8 @@ func (c *Client) getPosts(ctx context.Context, page int) (*Posts, error) {
 	path := fmt.Sprintf("teams/%s/posts", c.teamName)
 
 	queries := map[string]string{
-		"page": strconv.Itoa(page),
+		"page":    strconv.Itoa(page),
+		"include": "comments",
 	}
 
 	req, err := c.newRequest(ctx, "GET", path, queries, nil)
