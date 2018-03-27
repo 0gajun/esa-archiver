@@ -86,8 +86,9 @@ func (c *Client) getPosts(ctx context.Context, page int) (*Posts, error) {
 	path := fmt.Sprintf("teams/%s/posts", c.teamName)
 
 	queries := map[string]string{
-		"page":    strconv.Itoa(page),
-		"include": "comments",
+		"page":     strconv.Itoa(page),
+		"per_page": "100",
+		"include":  "comments",
 	}
 
 	req, err := c.newRequest(ctx, "GET", path, queries, nil)
@@ -100,6 +101,8 @@ func (c *Client) getPosts(ctx context.Context, page int) (*Posts, error) {
 		return nil, errors.Wrap(err, "Failed to get posts")
 	}
 	defer resp.Body.Close()
+
+	fmt.Println("X-RateLimit-Remaining: ", resp.Header.Get("X-RateLimit-Remaining"))
 
 	var posts Posts
 	decoder := json.NewDecoder(resp.Body)
