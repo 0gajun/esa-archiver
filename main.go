@@ -142,6 +142,18 @@ func (e *esaPostArchiver) do(post *esa.Post) error {
 	}
 	defer out.Close()
 
+	metadata := fmt.Sprintf("---\n"+
+		"title: \"%s\"\n"+
+		"category: %s\n"+
+		"tags: %s\n"+
+		"created_at: %s\n"+
+		"updated_at: %s\n"+
+		"number: %d\n"+
+		"---\n\n",
+		post.Name, post.Category, strings.Join(post.Tags, ","), post.CreatedAt.String(), post.UpdatedAt.String(), post.Number)
+
+	io.WriteString(out, metadata)
+
 	io.WriteString(out, replacedBody)
 
 	if len(post.Comments) > 0 {
